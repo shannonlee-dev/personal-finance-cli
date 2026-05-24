@@ -1,0 +1,5 @@
+{"amount": 20000, "category": "food", "date": "2024-01-15", "id": "TX-000001", "memo": "저녁", "tags": ["meal", "dinner"], "type": "expense"}
+{"amount": 3000000, "category": "salary", "date": "2024-01-25", "id": "TX-000002", "memo": "월급", "tags": ["pay"], "type": "income"}
+{"amount": 15000, "category": "food", "date": "2024-01-15", "id": "TX-000003", "memo": "점심", "tags": ["meal"], "type": "expense"}
+{"amount": 3000000, "category": "salary", "date": "2024-01-25", "id": "TX-000004", "memo": "월급", "tags": ["pay"], "type": "income"}
+{"amount": 700000, "category": "rent", "date": "2024-02-01", "id": "TX-000005", "memo": "월세", "tags": ["fixed"], "type": "expense"}
