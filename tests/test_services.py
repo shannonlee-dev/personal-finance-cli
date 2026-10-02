@@ -48,3 +48,13 @@ def test_search_service_rejects_nonpositive_limit(tmp_path, limit):
     service = BudgetService(tmp_path)
     with pytest.raises(AppError, match="limit"):
         service.search_transactions(limit=limit)
+
+
+def test_recurring_reference_prevents_category_deletion(tmp_path):
+    service = BudgetService(tmp_path)
+    service.add_category("subscription")
+    service.add_recurring("expense", 5, 1000, "subscription")
+    with pytest.raises(AppError, match="카테고리"):
+        service.remove_category("subscription")
+    assert "subscription" in service.categories()
+    assert service.apply_recurring("2024-02") == 1

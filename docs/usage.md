@@ -17,7 +17,7 @@ uv run --frozen budget --data-dir .runtime/data update --id TX-000001 --amount 2
 uv run --frozen budget --data-dir .runtime/data delete --id TX-000001
 ```
 
-카테고리 삭제에는 `category remove 이름`을 사용합니다. 실제 거래에서 사용하는 카테고리의 삭제 규칙은 서비스에서 검증합니다.
+카테고리 삭제에는 `category remove 이름`을 사용합니다. 기존 거래 또는 반복 규칙에서 사용하는 카테고리는 삭제할 수 없습니다. 거부된 삭제는 카테고리와 규칙을 보존하므로 이후 반복 거래를 정상 적용할 수 있습니다.
 
 `list`와 `search`의 `--limit`, `summary`의 `--top`은 1 이상의 정수여야 합니다. 검색은 `--q`로 메모의 대소문자 구분 없는 부분 일치, `--tag`로 태그 일치를 추가할 수 있습니다.
 

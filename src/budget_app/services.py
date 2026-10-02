@@ -161,6 +161,11 @@ class BudgetService:
                 "사용 중인 카테고리는 삭제할 수 없습니다.",
                 "거래를 다른 카테고리로 수정한 뒤 삭제하세요.",
             )
+        if any(rule.category == name for rule in self.store.iter_recurring()):
+            raise AppError(
+                "반복 거래에서 사용 중인 카테고리는 삭제할 수 없습니다.",
+                "반복 규칙이 참조하는 카테고리를 유지하세요.",
+            )
         return self.store.remove_category(name)
 
     def update_transaction(self, tx_id: str, changes: dict[str, object]) -> bool:

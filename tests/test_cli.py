@@ -59,3 +59,21 @@ def test_invalid_month_returns_nonzero(cli):
 def test_search_rejects_nonpositive_limit(cli, limit):
     result = cli("search", "--limit", limit, check=False)
     assert result.returncode != 0 and "limit" in result.stderr
+
+
+def test_category_deletion_keeps_recurring_rule_usable(cli):
+    cli(
+        "recurring",
+        "add",
+        "--type",
+        "expense",
+        "--day",
+        "5",
+        "--amount",
+        "1000",
+        "--category",
+        "rent",
+    )
+    result = cli("category", "remove", "rent", check=False)
+    assert result.returncode != 0 and "카테고리" in result.stderr
+    assert "created=1" in cli("recurring", "apply", "--month", "2024-02").stdout
