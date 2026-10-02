@@ -78,4 +78,4 @@ make build
 
 임시 폴더에서 카테고리·예산·CSV 가져오기·내보내기·백업을 확인합니다. 기존 샘플과 사용자 데이터는 검증 대상으로 수정하지 않습니다. 프로세스 종료 후에도 데이터 파일은 유지되므로 실제 사용 데이터는 별도로 백업합니다.
 
-`make check`는 정적 분석·포맷·문서 검사를, `make test`는 `uv run --frozen pytest -q`로 전체 동작 검사를 실행합니다. `make smoke`는 같은 테스트 중 `smoke` 마커가 붙은 실행 확인만 선택합니다(`uv run --frozen pytest -q -m smoke`). 테스트는 `test_*.py`와 fixture로 구성하며 임시 DB·파일과 모의 요청을 사용합니다.
+`make check`는 정적 분석·포맷·문서 검사를, `make test`는 `uv run --frozen pytest -q`로 등록된 회귀 테스트를 실행합니다. 임시 JSONL 데이터로 대화형 추가·검색·수정·삭제, 예산/월별 합계, CSV, 백업, 반복 규칙, 기존 날짜 호환성과 잘못된 입력의 데이터 보존을 검증합니다. `make smoke`는 `smoke` 마커가 붙은 실제 CLI 프로세스 검증만 선택합니다(`uv run --frozen pytest -q -m smoke`). 동시 쓰기나 강제 종료 중 저장의 내구성은 자동 테스트 범위에 포함하지 않습니다.

@@ -58,3 +58,40 @@ def test_recurring_reference_prevents_category_deletion(tmp_path):
         service.remove_category("subscription")
     assert "subscription" in service.categories()
     assert service.apply_recurring("2024-02") == 1
+
+
+@pytest.mark.parametrize(
+    "filters",
+    [
+        {"date_from": "2024-01-02", "date_to": "2024-01-02"},
+        {"category": "food"},
+        {"tx_type": "expense"},
+        {"query": "LUNCH"},
+        {"tag": "meal"},
+        {"limit": 1},
+    ],
+)
+def test_search_filters_exclude_nonmatching_transactions(tmp_path, filters):
+    service = BudgetService(tmp_path)
+    service.add_transaction("income", "2024-01-01", 5000, "salary", "Salary", "work")
+    wanted = service.add_transaction(
+        "expense", "2024-01-02", 1000, "food", "Lunch", "meal"
+    )
+    assert [tx.id for tx in service.search_transactions(**filters)] == [wanted.id]
+
+
+def test_summary_totals_budget_and_expense_ranking(tmp_path):
+    service = BudgetService(tmp_path)
+    service.add_transaction("income", "2024-01-01", 5000, "salary")
+    service.add_transaction("expense", "2024-01-02", 1000, "food")
+    service.add_transaction("expense", "2024-01-03", 2000, "rent")
+    service.add_transaction("expense", "2024-02-01", 9000, "rent")
+    service.set_budget("2024-01", 2000)
+    result = service.summary("2024-01", 1)
+    assert (result["income"], result["expense"], result["balance"]) == (
+        5000,
+        3000,
+        2000,
+    )
+    assert result["usage"] == 150 and result["over_budget"] is True
+    assert result["top"] == [("rent", 2000)]
