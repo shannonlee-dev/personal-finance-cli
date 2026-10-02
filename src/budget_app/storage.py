@@ -78,7 +78,7 @@ class JsonlStore:
         for line_no, row in self._read_jsonl_rows(path):
             try:
                 yield factory(row)
-            except (KeyError, TypeError, ValueError) as exc:
+            except (AppError, KeyError, TypeError, ValueError) as exc:
                 raise AppError(
                     f"저장 파일 행이 올바르지 않습니다: {path.name}:{line_no}",
                     f"{label} 필드와 값 형식을 확인하세요.",

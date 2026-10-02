@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
+from .validators import validate_date, validate_month
+
 
 @dataclass(slots=True)
 class Transaction:
@@ -22,7 +24,7 @@ class Transaction:
         return cls(
             id=str(row["id"]),
             type=str(row["type"]),
-            date=str(row["date"]),
+            date=validate_date(str(row["date"])),
             amount=int(row["amount"]),
             category=str(row["category"]),
             memo=str(row.get("memo", "")),
@@ -48,7 +50,7 @@ class Budget:
 
     @classmethod
     def from_dict(cls, row: dict[str, Any]) -> "Budget":
-        return cls(month=str(row["month"]), amount=int(row["amount"]))
+        return cls(month=validate_month(str(row["month"])), amount=int(row["amount"]))
 
     def to_dict(self) -> dict[str, Any]:
         return {"month": self.month, "amount": self.amount}

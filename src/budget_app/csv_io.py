@@ -52,15 +52,15 @@ def export_csv(
     date_to: str | None = None,
 ) -> int:
     if month:
-        validate_month(month)
+        month = validate_month(month)
     elif not (date_from and date_to):
         raise AppError(
             "export 조건이 필요합니다.", "--month 또는 --from/--to를 지정하세요."
         )
     if date_from:
-        validate_date(date_from)
+        date_from = validate_date(date_from)
     if date_to:
-        validate_date(date_to)
+        date_to = validate_date(date_to)
 
     def include(tx: Transaction) -> bool:
         if month:

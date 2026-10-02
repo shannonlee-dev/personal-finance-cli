@@ -9,18 +9,18 @@ VALID_TYPES = {"income", "expense"}
 
 def validate_date(value: str) -> str:
     try:
-        datetime.strptime(value, "%Y-%m-%d")
+        parsed = datetime.strptime(value, "%Y-%m-%d")
     except ValueError as exc:
         raise AppError("날짜 형식이 올바르지 않습니다.", "예: 2024-01-15") from exc
-    return value
+    return parsed.date().isoformat()
 
 
 def validate_month(value: str) -> str:
     try:
-        datetime.strptime(value, "%Y-%m")
+        parsed = datetime.strptime(value, "%Y-%m")
     except ValueError as exc:
         raise AppError("월 형식이 올바르지 않습니다.", "예: 2024-01") from exc
-    return value
+    return parsed.date().isoformat()[:7]
 
 
 def validate_type(value: str) -> str:

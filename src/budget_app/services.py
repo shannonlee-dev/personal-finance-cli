@@ -75,9 +75,9 @@ class BudgetService:
         limit: int = 100,
     ) -> list[Transaction]:
         if date_from:
-            validate_date(date_from)
+            date_from = validate_date(date_from)
         if date_to:
-            validate_date(date_to)
+            date_to = validate_date(date_to)
         if tx_type:
             tx_type = validate_type(tx_type)
         if category:
