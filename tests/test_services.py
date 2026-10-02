@@ -41,3 +41,10 @@ def test_corrupt_storage_reports_line_without_rewriting(tmp_path):
     with pytest.raises(AppError, match="transactions.jsonl:1"):
         service.list_transactions(20)
     assert path.read_bytes() == original
+
+
+@pytest.mark.parametrize("limit", [0, -1])
+def test_search_service_rejects_nonpositive_limit(tmp_path, limit):
+    service = BudgetService(tmp_path)
+    with pytest.raises(AppError, match="limit"):
+        service.search_transactions(limit=limit)

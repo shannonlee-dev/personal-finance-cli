@@ -14,6 +14,7 @@ from .validators import (
     validate_amount,
     validate_date,
     validate_month,
+    validate_positive_int,
     validate_type,
 )
 
@@ -74,6 +75,7 @@ class BudgetService:
         tag: str | None = None,
         limit: int = 100,
     ) -> list[Transaction]:
+        limit = validate_positive_int(limit, "limit")
         if date_from:
             date_from = validate_date(date_from)
         if date_to:

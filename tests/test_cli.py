@@ -53,3 +53,9 @@ def test_csv_summary_export_and_backup(cli, tmp_path):
 
 def test_invalid_month_returns_nonzero(cli):
     assert cli("summary", "--month", "2024-99", check=False).returncode != 0
+
+
+@pytest.mark.parametrize("limit", ["0", "-1"])
+def test_search_rejects_nonpositive_limit(cli, limit):
+    result = cli("search", "--limit", limit, check=False)
+    assert result.returncode != 0 and "limit" in result.stderr

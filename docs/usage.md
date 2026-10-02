@@ -19,6 +19,8 @@ uv run --frozen budget --data-dir .runtime/data delete --id TX-000001
 
 카테고리 삭제에는 `category remove 이름`을 사용합니다. 실제 거래에서 사용하는 카테고리의 삭제 규칙은 서비스에서 검증합니다.
 
+`list`와 `search`의 `--limit`, `summary`의 `--top`은 1 이상의 정수여야 합니다. 검색은 `--q`로 메모의 대소문자 구분 없는 부분 일치, `--tag`로 태그 일치를 추가할 수 있습니다.
+
 ## CSV 형식
 
 UTF-8 헤더가 있는 CSV를 사용합니다.
